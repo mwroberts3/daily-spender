@@ -1,11 +1,13 @@
-import './controlPanel.css'
+import RecentDisplay from "./recentDisplay/RecentDisplay"
+import UserSettings from "./userSettings/UserSettings"
 
-const ControlPanal = () => {
+const ControlPanel = () => {
   return (
-    <div className='cp'>
-      Start: 07/17/2022
+    <div className="cp">
+      <UserSettings />
+      <RecentDisplay />
     </div>
   )
 }
 
-export default ControlPanal
+export default ControlPanel

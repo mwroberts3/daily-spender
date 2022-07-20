@@ -1,13 +1,23 @@
-import './recentDisplay.css'
+import '../controlPanel.css'
 
 const RecentDisplay = () => {
   return (
     <div className='rd'>
       <div className="rd-unit">
-        7/17 - $0
+        <p>7/17</p>
+        <p>$0</p>
       </div>
       <div className="rd-unit">
-        7/18 - $0
+        <p>7/18</p>
+        <p>$0</p>
+      </div>
+      <div className="rd-unit">
+        <p>7/19</p>
+        <p>$0</p>
+      </div>
+      <div className="rd-unit">
+        <p>7/20</p>
+        <p>$0</p>
       </div>
     </div>
   )

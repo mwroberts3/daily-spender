@@ -1,5 +1,57 @@
+/* control panel */
 .cp {
-  width: 200px;
-  margin: auto;
-  text-align: center;
+  max-width: 320px;
+  margin: 0 auto 10px;
+}
+
+/* user settings */
+.us-stat-line, .us-edit-btns {
+  max-width: inherit;
+  display: flex;
+  justify-content: space-between;
+}
+
+.us-stat-line {
+  margin-bottom: 10px;
+}
+
+.us-edit-btns {
+  margin-top: 10px;
+}
+
+.us-edit-btns button {
+  display: inline-block;
+  width: 120px;
+  height: 30px;
+  border-radius: 10px;
+  border: none;
+  background-color: #326088;
+  font-size: 14px;
+  color: #fff;
+}
+
+.us-edit-btns button:first-child {
+  margin-left: 5px;
+}
+
+.us-edit-btns button:last-child {
+  margin-right: 5px;
+}
+
+/* recent display */
+.rd {
+  max-width: inherit;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  overflow: hidden;
+}
+
+.rd-unit {
+  min-width: 80px;
+}
+
+.rd-unit p:last-child {
+  padding-left: 6px;
 }
