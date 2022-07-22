@@ -10,7 +10,6 @@ const UserSettings = () => {
       <div className="us-stat-line">
         <span>Start: 07/17/2022</span> <span>Limit: $27.40</span>
       </div>
-
     </div>
   )
 }

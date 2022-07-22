@@ -1,11 +1,11 @@
 import RecentDisplay from "./recentDisplay/RecentDisplay"
 import UserSettings from "./userSettings/UserSettings"
 
-const ControlPanel = () => {
+const ControlPanel = ({transactions}) => {
   return (
     <div className="cp">
       <UserSettings />
-      <RecentDisplay />
+      <RecentDisplay transactions={transactions}/>
     </div>
   )
 }

@@ -1,6 +1,8 @@
 import '../controlPanel.css'
 
-const RecentDisplay = () => {
+const RecentDisplay = ({transactions}) => {
+  console.log('trans test', transactions)
+
   return (
     <div className='rd'>
       <div className="rd-unit">

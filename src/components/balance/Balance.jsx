@@ -2,16 +2,16 @@ import { useEffect, useState } from 'react'
 import moment from 'moment'
 import './balance.css'
 
-const Balance = () => {
+const Balance = ({setTransactions}) => {
   const access_token = "GxpXh6Y5Se3hAe-q_GYr3-CC0TZSKaOZhZ9jJ1TV6Bs";
 
-  const [balance, setBalance] = useState(0)
+  const [balance, setBalance] = useState(0);
 
   useEffect(() => {
     getBudgetId()
       .then((budgetId) => getTransactions(budgetId))
       .then((transSum) => calculateBalance(transSum))
-  })
+  }, [])
 
   async function getBudgetId() {
     const response = await fetch(`https://api.youneedabudget.com/v1/budgets`, {
@@ -19,7 +19,7 @@ const Balance = () => {
       headers: {
         'Authorization' : `Bearer ${access_token}`
       }
-    }, []);
+    });
 
     const data = await response.json();
     
@@ -38,12 +38,15 @@ const Balance = () => {
 
     const data = await response.json();
 
+    console.log(data.data.transactions)
+
     data.data.transactions.forEach((trans) => {
-      if (trans.category_name !== 'Inflow: Ready to Assign' && trans.category_name !== 'Rent/Mortgage' && trans.category_name !== 'Betterment Investment, at least $500 per month') {
+      if (trans.category_name !== 'Inflow: Ready to Assign' && trans.category_name !== 'Rent/Mortgage' && trans.category_name !== 'Betterment Investment, at least $500 per month' && trans.payee_name !== 'HUEL') {
         transSum += trans.amount;
       }
     })
 
+    setTransactions(data.data.transactions);
     return transSum;
   }
 
@@ -58,7 +61,7 @@ const Balance = () => {
     // To calculate the no. of days between two dates
     let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
 
-    setBalance(((Difference_In_Days * 27.40) + (transSum / 1000)).toFixed(2))
+    setBalance(((Difference_In_Days * 25) + (transSum / 1000)).toFixed(2))
   }
 
   return (
