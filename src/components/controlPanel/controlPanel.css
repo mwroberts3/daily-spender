@@ -41,7 +41,7 @@
 /* recent display */
 .rd {
   max-width: inherit;
-  padding-left: 20px;
+  /* padding-left: 20px; */
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -50,8 +50,7 @@
 
 .rd-unit {
   min-width: 80px;
+  text-align: center;
+  border: 1px solid #eee;
 }
 
-.rd-unit p:last-child {
-  padding-left: 6px;
-}

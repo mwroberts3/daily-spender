@@ -8,7 +8,7 @@ const UserSettings = () => {
         <button>Change</button>
       </div>
       <div className="us-stat-line">
-        <span>Start: 07/17/2022</span> <span>Limit: $27.40</span>
+        <span>Since 7-17-2022</span> <span>$27.40</span>
       </div>
     </div>
   )

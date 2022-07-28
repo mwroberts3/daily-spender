@@ -1,7 +1,15 @@
 .b {
   font-weight: bold;
   font-size: 32px;
-  width: 100px;
+  width: 200px;
   margin: auto;
   text-align: center;
+}
+
+.b-neg {
+  color: crimson;
+}
+
+.b-pos {
+  color: limegreen;
 }

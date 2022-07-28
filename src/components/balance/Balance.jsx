@@ -41,7 +41,7 @@ const Balance = ({setTransactions}) => {
     console.log(data.data.transactions)
 
     data.data.transactions.forEach((trans) => {
-      if (trans.category_name !== 'Inflow: Ready to Assign' && trans.category_name !== 'Rent/Mortgage' && trans.category_name !== 'Betterment Investment, at least $500 per month' && trans.payee_name !== 'HUEL') {
+      if (trans.category_name !== 'Inflow: Ready to Assign' && trans.category_name !== 'Rent/Mortgage' && trans.category_name !== 'Betterment Investment, at least $500 per month' && trans.payee_name !== 'HUEL' && trans.category_name !== 'Wellness') {
         transSum += trans.amount;
       }
     })
@@ -61,12 +61,12 @@ const Balance = ({setTransactions}) => {
     // To calculate the no. of days between two dates
     let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
 
-    setBalance(((Difference_In_Days * 25) + (transSum / 1000)).toFixed(2))
+    setBalance(((Difference_In_Days * 27.40) + (transSum / 1000)).toFixed(2))
   }
 
   return (
     <div className='b'>
-      <p>{balance !== 0 ? `$${balance}` : 'loading...'}</p>
+      <p className={balance < 0 ? 'b-neg' : 'b-pos'}>{balance !== 0 ? `$${balance}` : 'loading...'}</p>
     </div>
   )
 }
