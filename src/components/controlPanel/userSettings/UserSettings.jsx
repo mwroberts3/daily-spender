@@ -8,7 +8,7 @@ const UserSettings = ({ setExcludedCategories }) => {
         <button>Logout</button>
       </div>
       <div className="us-stat-line">
-        <span>Since 7-17-2022</span> <span>$27.40</span>
+        <span>Since 7-27-2022</span> <span>$27.40</span>
       </div>
     </div>
   )

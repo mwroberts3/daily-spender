@@ -29,7 +29,7 @@ const Balance = ({setTransactions, excludedCategories}) => {
   async function getTransactions(budgetId) {
     let transSum = 0;
 
-    const response = await fetch(`https://api.youneedabudget.com/v1/budgets/${budgetId}/transactions?since_date=2022-07-17`, {
+    const response = await fetch(`https://api.youneedabudget.com/v1/budgets/${budgetId}/transactions?since_date=2022-07-27`, {
       method: 'GET',
       headers: {
         'Authorization' : `Bearer ${access_token}`,
@@ -52,7 +52,7 @@ const Balance = ({setTransactions, excludedCategories}) => {
 
   function calculateBalance(transSum) {
     // set startDate one day prior to actual start date, because otherwise day count is one less than should be
-    let startDate = new Date('07/16/2022');
+    let startDate = new Date('07/26/2022');
     let currentDate = new Date(moment().format('L'));
 
     // To calculate the time difference of two dates

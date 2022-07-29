@@ -9,8 +9,9 @@ function App() {
     'Inflow: Ready to Assign',
     'Rent/Mortgage',
     'Betterment Investment, at least $500 per month',
-    'HUEL',
-    'Wellness'
+    'Wellness',
+    'Starting Balance',
+    'Reconciliation Balance Adjustment'
   ]);
 
   return (

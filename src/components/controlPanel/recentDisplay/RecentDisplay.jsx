@@ -27,8 +27,10 @@ const RecentDisplay = ({transactions, excludedCategories}) => {
     for (let i=0; i<dates.length; i++) {
       for (let k=transCount - 1; k<transactions.length; k++) {
         if (dates[i] === transactions[k].date) {
-          tempAmount += transactions[k].amount;
-          transCount++;
+          if (!excludedCategories.includes(transactions[k].category_name) && !excludedCategories.includes(transactions[k].payee_name)) {
+            tempAmount += transactions[k].amount;
+            transCount++;
+          }
         }
         
         if (k === transactions.length - 1) {
