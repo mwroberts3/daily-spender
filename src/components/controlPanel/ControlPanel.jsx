@@ -1,11 +1,16 @@
 import RecentDisplay from "./recentDisplay/RecentDisplay"
 import UserSettings from "./userSettings/UserSettings"
 
-const ControlPanel = ({transactions}) => {
+const ControlPanel = ({transactions, excludedCategories, setExcludedCategories}) => {
   return (
     <div className="cp">
-      <UserSettings />
-      <RecentDisplay transactions={transactions}/>
+      <UserSettings 
+        setExcludedCategories={setExcludedCategories}
+      />
+      <RecentDisplay 
+        transactions={transactions}
+        excludedCategories={excludedCategories}
+      />
     </div>
   )
 }

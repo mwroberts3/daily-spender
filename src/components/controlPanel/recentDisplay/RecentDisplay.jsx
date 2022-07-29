@@ -1,7 +1,7 @@
 import '../controlPanel.css'
 import moment from 'moment'
 
-const RecentDisplay = ({transactions}) => {
+const RecentDisplay = ({transactions, excludedCategories}) => {
 
   // will need to pass in the start date and limit as well
   let transByDate = [];

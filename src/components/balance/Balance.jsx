@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import moment from 'moment'
 import './balance.css'
 
-const Balance = ({setTransactions}) => {
+const Balance = ({setTransactions, excludedCategories}) => {
   const access_token = "GxpXh6Y5Se3hAe-q_GYr3-CC0TZSKaOZhZ9jJ1TV6Bs";
 
   const [balance, setBalance] = useState(0);
@@ -41,7 +41,7 @@ const Balance = ({setTransactions}) => {
     console.log(data.data.transactions)
 
     data.data.transactions.forEach((trans) => {
-      if (trans.category_name !== 'Inflow: Ready to Assign' && trans.category_name !== 'Rent/Mortgage' && trans.category_name !== 'Betterment Investment, at least $500 per month' && trans.payee_name !== 'HUEL' && trans.category_name !== 'Wellness') {
+      if (!excludedCategories.includes(trans.category_name) && !excludedCategories.includes(trans.payee_name)) {
         transSum += trans.amount;
       }
     })
