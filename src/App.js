@@ -8,10 +8,17 @@ function App() {
   const [excludedCategories, setExcludedCategories] = useState([
     'Inflow: Ready to Assign',
     'Rent/Mortgage',
+    'Utilities',
+    'Crypto Investment $309 per month',
     'Betterment Investment, at least $500 per month',
     'Wellness',
+    'New (used) Car',
+    'Car Care / Auto Insurance Fund',
+    'Fitness',
+    'Education',
+    'Vacation',
     'Starting Balance',
-    'Reconciliation Balance Adjustment'
+    'Reconciliation Balance Adjustment',
   ]);
 
   return (

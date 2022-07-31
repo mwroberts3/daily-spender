@@ -1,12 +1,52 @@
 import '../controlPanel.css'
 import moment from 'moment'
+import { useState } from 'react'
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 
-const RecentDisplay = ({transactions, excludedCategories}) => {
-
+const RecentDisplay = ({transactions, excludedCategories}) => {  
   // will need to pass in the start date and limit as well
+  const [dayCount, setDayCount] = useState(5);
   let transByDate = [];
   let fourRecentTrans = [];
+  
+  const getFourMostRecentTrans = (dayCount) => {
+    let totalsDaysofUse = transByDate.length;
+    // console.log(dayCount);
+
+    // need to put in safeties if user has less than 4 days
+    fourRecentTrans.splice(0);
+
+    transByDate.forEach((date) => {
+      if (date.id > totalsDaysofUse - dayCount) {
+        fourRecentTrans.push(date)
+      }
+    })
+
+    if (fourRecentTrans.length > 4) {
+      fourRecentTrans.splice(fourRecentTrans.length-(dayCount-5));
+    }
+
+    console.log(fourRecentTrans)
+  }
+
+  const previousDay = () => {
+    let dayCountIncrease = dayCount + 1
+
+    setDayCount(dayCountIncrease);
+    getFourMostRecentTrans(dayCount)
+  }
+  
+  const nextDay = () => {
+    let dayCountDecrease = dayCount - 1
+  
+    setDayCount(dayCountDecrease);
+    getFourMostRecentTrans(dayCount)
+
+  }
+
   const transByDateSeparation = () => {
+    // console.log('test')
+
     let dates = [];
 
     for (let i=0; i<transactions.length; i++) {
@@ -19,7 +59,7 @@ const RecentDisplay = ({transactions, excludedCategories}) => {
 
     dates = [...new Set(dates)]
 
-    console.log(dates);
+    // console.log(dates);
 
     let tempAmount = 0;
     let transCount = 1;
@@ -48,28 +88,26 @@ const RecentDisplay = ({transactions, excludedCategories}) => {
       total: 0
     })
    }
+
+   getFourMostRecentTrans(dayCount);
   }
 
   transByDateSeparation();
 
-  // need to put in safeties if user has less than 4 days
-  let totalsDaysofUse = transByDate.length;
-  transByDate.forEach((date) => {
-    if (date.id > totalsDaysofUse - 5) {
-      fourRecentTrans.push(date)
-    }
-  })
-
-  console.log(transByDate)
-
   return (
     <div className='rd'>
+      <div className="rd-arrow-left">
+        <FaChevronLeft onClick={previousDay}/>
+      </div>
       {fourRecentTrans.map((date) => (
       <div key={date.id} className="rd-unit">
         <p>{date.date.substring(5, date.date.length)}</p>
         <p>${date.total / 1000}</p>
       </div>
       ))}
+      <div className="rd-arrow-right">
+        <FaChevronRight onClick={nextDay}/>
+      </div>
    </div>
   )
 }
