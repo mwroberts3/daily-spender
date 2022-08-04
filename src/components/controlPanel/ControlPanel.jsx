@@ -1,10 +1,10 @@
 import RecentDisplay from "./recentDisplay/RecentDisplay"
-import UserSettings from "./userSettings/UserSettings"
+import CpButtons from "./cpButtons/CpButtons"
 
 const ControlPanel = ({transactions, excludedCategories, setExcludedCategories}) => {
   return (
     <div className="cp">
-      <UserSettings 
+      <CpButtons 
         setExcludedCategories={setExcludedCategories}
       />
       <RecentDisplay 

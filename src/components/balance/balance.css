@@ -6,8 +6,12 @@
   text-align: center;
 }
 
-.b-neg {
+.b-neg-2 {
   color: crimson;
+}
+
+.b-neg-1 {
+  color: #ff8d23;
 }
 
 .b-pos {

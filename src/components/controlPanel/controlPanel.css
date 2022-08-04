@@ -4,22 +4,22 @@
   margin: 0 auto 10px;
 }
 
-/* user settings */
-.us-stat-line, .us-edit-btns {
+/* control panel buttons */
+.cpb-stat-line, .cpb-edit-btns {
   max-width: inherit;
   display: flex;
   justify-content: space-between;
 }
 
-.us-stat-line {
+.cpb-stat-line {
   margin-bottom: 10px;
 }
 
-.us-edit-btns {
+.cpb-edit-btns {
   margin-top: 10px;
 }
 
-.us-edit-btns button {
+.cpb-edit-btns button {
   display: inline-block;
   width: 120px;
   height: 30px;
@@ -31,11 +31,11 @@
   cursor: pointer;
 }
 
-.us-edit-btns button:first-child {
+.cpb-edit-btns button:first-child {
   margin-left: 5px;
 }
 
-.us-edit-btns button:last-child {
+.cpb-edit-btns button:last-child {
   margin-right: 5px;
 }
 
@@ -63,6 +63,13 @@
   align-items: center;
   color: #333;
   cursor: pointer;
+}
+
+/* user settings */
+.us {
+  width: inherit;
+  height: 400px;
+  border: 2px solid black;
 }
 
 

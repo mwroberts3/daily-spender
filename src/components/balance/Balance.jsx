@@ -66,7 +66,7 @@ const Balance = ({setTransactions, excludedCategories}) => {
 
   return (
     <div className='b'>
-      <p className={balance < 0 ? 'b-neg' : 'b-pos'}>{balance !== 0 ? `$${balance}` : 'loading...'}</p>
+      <p className={balance < 0 ? 'b-neg-2' : balance < 27.40 - balance ? 'b-neg-1' : 'b-pos'}>{balance !== 0 ? `$${balance}` : 'loading...'}</p>
     </div>
   )
 }
