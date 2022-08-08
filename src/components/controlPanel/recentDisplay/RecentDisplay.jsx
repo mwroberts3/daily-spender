@@ -4,62 +4,60 @@ import { useState } from 'react'
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 
 const RecentDisplay = ({transactions, excludedCategories}) => {  
-  // will need to pass in the start date and limit as well
+  // will need to pass in the start date and spending limit as well
   const [dayCount, setDayCount] = useState(5);
   let transByDate = [];
-  let fourRecentTrans = [];
+  let fourRecentDates = [];
   
   const getFourMostRecentTrans = (dayCount) => {
     let totalsDaysofUse = transByDate.length;
-    // console.log(dayCount);
 
     // need to put in safeties if user has less than 4 days
-    fourRecentTrans.splice(0);
+    fourRecentDates.splice(0);
 
     transByDate.forEach((date) => {
       if (date.id > totalsDaysofUse - dayCount) {
-        fourRecentTrans.push(date)
+        fourRecentDates.push(date)
       }
     })
 
-    if (fourRecentTrans.length > 4) {
-      fourRecentTrans.splice(fourRecentTrans.length-(dayCount-5));
+    if (fourRecentDates.length > 4) {
+      fourRecentDates.splice(fourRecentDates.length-(dayCount-5));
     }
 
-    console.log(fourRecentTrans)
+    // condense data for cleaner HTML in return
+    fourRecentDates.forEach((date) => {
+      date.date = date.date.substring(5, date.date.length);
+      date.total = date.total / 1000;
+    })
   }
 
   const previousDay = () => {
-    let dayCountIncrease = dayCount + 1
+    let dayCountIncrease = dayCount + 1;
 
     setDayCount(dayCountIncrease);
-    getFourMostRecentTrans(dayCount)
+    getFourMostRecentTrans(dayCount);
   }
   
   const nextDay = () => {
-    let dayCountDecrease = dayCount - 1
+    let dayCountDecrease = dayCount - 1;
   
     setDayCount(dayCountDecrease);
-    getFourMostRecentTrans(dayCount)
+    getFourMostRecentTrans(dayCount);
 
   }
 
   const transByDateSeparation = () => {
-    // console.log('test')
-
     let dates = [];
 
     for (let i=0; i<transactions.length; i++) {
       dates.push(transactions[i].date);
     }
 
-    let currentDate = moment().format('YYYY-MM-DD')
+    let currentDate = moment().format('YYYY-MM-DD');
 
-    dates.push(currentDate)
-
-    dates = [...new Set(dates)]
-
-    // console.log(dates);
+    dates.push(currentDate);
+    dates = [...new Set(dates)];
 
     let tempAmount = 0;
     let transCount = 1;
@@ -99,12 +97,14 @@ const RecentDisplay = ({transactions, excludedCategories}) => {
       <div className="rd-arrow-left">
         <FaChevronLeft onClick={previousDay}/>
       </div>
-      {fourRecentTrans.map((date) => (
-      <div key={date.id} className="rd-unit">
-        <p>{date.date.substring(5, date.date.length)}</p>
-        <p>${date.total / 1000}</p>
-      </div>
-      ))}
+      {fourRecentDates.map((item) => {
+        const { id, date, total } = item;
+        return (
+          <div className="rd-unit" key={id}>
+            <p className='rd-unit-date'>{date}</p>
+            <p className={total < -27.40 ? 'b-neg-2' : 'b-pos'}>${total}</p>
+          </div>
+        )})}
       <div className="rd-arrow-right">
         <FaChevronRight onClick={nextDay}/>
       </div>
