@@ -20,6 +20,7 @@ function App() {
     'Starting Balance',
     'Reconciliation Balance Adjustment',
   ]);
+  const [startDate, setStartDate] = useState('2022-07-27');
 
   return (
     <div className="App">
@@ -30,7 +31,9 @@ function App() {
         setExcludedCategories={setExcludedCategories}
       />
       <Balance 
-        setTransactions={setTransactions} excludedCategories={excludedCategories}
+        setTransactions={setTransactions} 
+        excludedCategories={excludedCategories}
+        startDate={startDate}
       /> 
     </div>
   );

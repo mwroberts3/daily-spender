@@ -2,18 +2,13 @@ import { useEffect, useState } from 'react'
 import moment from 'moment'
 import './balance.css'
 
-const Balance = ({setTransactions, excludedCategories}) => {
+const Balance = ({setTransactions, excludedCategories, startDate}) => {
   const access_token = "GxpXh6Y5Se3hAe-q_GYr3-CC0TZSKaOZhZ9jJ1TV6Bs";
 
   const [balance, setBalance] = useState(0);
+  const [prevDayBalance, setPrevDayBalance] = useState(0);
 
-  useEffect(() => {
-    getBudgetId()
-      .then((budgetId) => getTransactions(budgetId))
-      .then((transSum) => calculateBalance(transSum))
-  }, [])
-
-  async function getBudgetId() {
+  const getBudgetId = async () => {
     const response = await fetch(`https://api.youneedabudget.com/v1/budgets`, {
       method: 'GET',
       headers: {
@@ -26,47 +21,64 @@ const Balance = ({setTransactions, excludedCategories}) => {
     return data.data.budgets[0].id;
   }
 
-  async function getTransactions(budgetId) {
+  const getTransactions = async (budgetId) => {
     let transSum = 0;
+    let prevDayTransSum = 0;
 
-    const response = await fetch(`https://api.youneedabudget.com/v1/budgets/${budgetId}/transactions?since_date=2022-07-27`, {
+    const response = await fetch(`https://api.youneedabudget.com/v1/budgets/${budgetId}/transactions?since_date=${startDate}`, {
       method: 'GET',
       headers: {
         'Authorization' : `Bearer ${access_token}`,
       },
     });
 
-    const data = await response.json();
+    let transData = await response.json();
+    transData = transData.data.transactions;
 
-    console.log(data.data.transactions)
+    transData.forEach((trans) => {
+      const {category_name, payee_name, amount, date} = trans;
 
-    data.data.transactions.forEach((trans) => {
-      if (!excludedCategories.includes(trans.category_name) && !excludedCategories.includes(trans.payee_name)) {
-        transSum += trans.amount;
+      if (!excludedCategories.includes(category_name) && !excludedCategories.includes(payee_name)) {
+        transSum += amount;
+
+        let currentDateInMs = new Date(date).getTime();
+        let finalDateInMs = new Date(transData[transData.length - 1].date).getTime();
+
+        if (currentDateInMs < finalDateInMs) {
+          prevDayTransSum += amount;
+        }
       }
     })
 
-    setTransactions(data.data.transactions);
-    return transSum;
+    setTransactions(transData);
+
+    return {transSum, prevDayTransSum};
   }
 
-  function calculateBalance(transSum) {
-    // set startDate one day prior to actual start date, because otherwise day count is one less than should be
-    let startDate = new Date('07/26/2022');
+  const calculateBalance = ({transSum, prevDayTransSum}) => {
     let currentDate = new Date(moment().format('L'));
 
-    // To calculate the time difference of two dates
-    let Difference_In_Time = currentDate.getTime() - startDate.getTime();
+    // get time difference in # of days
+    let diffInTime = currentDate.getTime() - new Date(startDate).getTime();
 
-    // To calculate the no. of days between two dates
-    let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
+    let diffInDays = (diffInTime / (1000 * 3600 * 24)) + 1;
+    diffInDays = +diffInDays.toFixed(0);
 
-    setBalance(((Difference_In_Days * 27.40) + (transSum / 1000)).toFixed(2))
+    setBalance(((diffInDays * 27.40) + (transSum / 1000)).toFixed(2));
+    setPrevDayBalance(((diffInDays - 1) * 27.40) + (prevDayTransSum / 1000));
   }
+
+  useEffect(() => {
+    getBudgetId()
+      .then((budgetId) => getTransactions(budgetId))
+      .then((transSum) => calculateBalance(transSum))
+  }, [])
 
   return (
     <div className='b'>
-      <p className={balance < 0 ? 'b-neg-2' : balance < 27.40 - balance ? 'b-neg-1' : 'b-pos'}>{balance !== 0 ? `$${balance}` : 'loading...'}</p>
+      <p className={
+        balance < 0 ? 'b-neg-2' : balance < prevDayBalance ? 'b-neg-1' : 'b-pos'}>{balance !== 0 ? `$${balance}` : 'loading...'}
+      </p>
     </div>
   )
 }
