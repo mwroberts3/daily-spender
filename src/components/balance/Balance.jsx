@@ -5,6 +5,7 @@ import './balance.css'
 const Balance = ({setTransactions, excludedCategories, startDate}) => {
   const access_token = "GxpXh6Y5Se3hAe-q_GYr3-CC0TZSKaOZhZ9jJ1TV6Bs";
 
+  const [isError, setIsError] = useState(false);
   const [balance, setBalance] = useState(0);
   const [prevDayBalance, setPrevDayBalance] = useState(0);
 
@@ -77,7 +78,8 @@ const Balance = ({setTransactions, excludedCategories, startDate}) => {
   return (
     <div className='b'>
       <p className={
-        balance < 0 ? 'b-neg-2' : balance < prevDayBalance ? 'b-neg-1' : 'b-pos'}>{balance !== 0 ? `$${balance}` : 'loading...'}
+        (balance < 0 && 'b-neg-2') || balance < prevDayBalance ? 'b-neg-1' : 'b-pos'}> 
+        {balance !== 0 ? `$${balance}` : 'loading...'}
       </p>
     </div>
   )

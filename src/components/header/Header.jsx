@@ -3,7 +3,7 @@ import './header.css'
 const Header = () => {
   return (
     <div className='h'>
-      Daily Budge
+      YNAB Daily Spender
     </div>
   )
 }

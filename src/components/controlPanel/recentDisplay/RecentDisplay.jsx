@@ -6,6 +6,8 @@ import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 const RecentDisplay = ({transactions, excludedCategories}) => {  
   // will need to pass in the start date and spending limit as well
   const [dayCount, setDayCount] = useState(5);
+  const [showLeftChevron, setShowLeftChevron] = useState(true);
+  const [showRightChevron, setShowRightChevron] = useState(false);
   let transByDate = [];
   let fourRecentDates = [];
   
@@ -30,21 +32,44 @@ const RecentDisplay = ({transactions, excludedCategories}) => {
       date.date = date.date.substring(5, date.date.length);
       date.total = date.total / 1000;
     })
+
+    console.log(transByDate);
   }
 
   const previousDay = () => {
-    let dayCountIncrease = dayCount + 1;
+    let lastMostRecent = fourRecentDates[fourRecentDates.length - 1].id;
+    let lastAllTrans = transByDate[transByDate.length - 1].id;
 
-    setDayCount(dayCountIncrease);
-    getFourMostRecentTrans(dayCount);
+    console.log(lastMostRecent);
+
+    if (lastMostRecent > 3) {
+      let dayCountIncrease = dayCount + 1;
+
+      if (lastMostRecent <= 4) {
+        setShowLeftChevron(false);
+      }
+
+      if (lastMostRecent <= lastAllTrans) {
+        setShowRightChevron(true);
+      }
+  
+      setDayCount(dayCountIncrease);
+      getFourMostRecentTrans(dayCount);
+    }
   }
   
   const nextDay = () => {
-    let dayCountDecrease = dayCount - 1;
-  
-    setDayCount(dayCountDecrease);
-    getFourMostRecentTrans(dayCount);
+    let lastMostRecent = fourRecentDates[fourRecentDates.length - 1].id;
+    let lastAllTrans = transByDate[transByDate.length - 1].id;
 
+    console.log(lastMostRecent, lastAllTrans);
+
+    if (lastMostRecent <= lastAllTrans - 1) {
+      let dayCountDecrease = dayCount - 1;
+    
+      setDayCount(dayCountDecrease);
+      getFourMostRecentTrans(dayCount); 
+    }
   }
 
   const transByDateSeparation = () => {
@@ -95,7 +120,7 @@ const RecentDisplay = ({transactions, excludedCategories}) => {
   return (
     <div className='rd'>
       <div className="rd-arrow-left">
-        <FaChevronLeft onClick={previousDay}/>
+        {showLeftChevron && <FaChevronLeft onClick={previousDay}/>}
       </div>
       {fourRecentDates.map((item) => {
         const { id, date, total } = item;
@@ -106,7 +131,7 @@ const RecentDisplay = ({transactions, excludedCategories}) => {
           </div>
         )})}
       <div className="rd-arrow-right">
-        <FaChevronRight onClick={nextDay}/>
+        {showRightChevron && <FaChevronRight onClick={nextDay}/>}
       </div>
    </div>
   )
