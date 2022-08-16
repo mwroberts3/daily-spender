@@ -51,6 +51,8 @@ const Balance = ({setTransactions, excludedCategories, startDate}) => {
       }
     })
 
+    console.log(transData);
+
     setTransactions(transData);
 
     return {transSum, prevDayTransSum};
@@ -65,6 +67,8 @@ const Balance = ({setTransactions, excludedCategories, startDate}) => {
     let diffInDays = (diffInTime / (1000 * 3600 * 24)) + 1;
     diffInDays = +diffInDays.toFixed(0);
 
+    console.log('difference in days', diffInDays);
+
     setBalance(((diffInDays * 27.40) + (transSum / 1000)).toFixed(2));
     setPrevDayBalance(((diffInDays - 1) * 27.40) + (prevDayTransSum / 1000));
   }
@@ -77,8 +81,9 @@ const Balance = ({setTransactions, excludedCategories, startDate}) => {
 
   return (
     <div className='b'>
+      {console.log('previous Day balance', prevDayBalance)}
       <p className={
-        (balance < 0 && 'b-neg-2') || balance < prevDayBalance ? 'b-neg-1' : 'b-pos'}> 
+        balance < 0 ? 'b-neg-2' : balance < prevDayBalance ? 'b-neg-1' : 'b-pos'}> 
         {balance !== 0 ? `$${balance}` : 'loading...'}
       </p>
     </div>

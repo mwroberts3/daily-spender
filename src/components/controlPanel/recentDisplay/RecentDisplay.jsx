@@ -64,6 +64,14 @@ const RecentDisplay = ({transactions, excludedCategories}) => {
 
     console.log(lastMostRecent, lastAllTrans);
 
+    if (lastMostRecent === lastAllTrans - 1) {
+      setShowRightChevron(false);
+    }
+
+    if (lastMostRecent >= 3) {
+        setShowLeftChevron(true);
+      }
+
     if (lastMostRecent <= lastAllTrans - 1) {
       let dayCountDecrease = dayCount - 1;
     
@@ -83,6 +91,23 @@ const RecentDisplay = ({transactions, excludedCategories}) => {
 
     dates.push(currentDate);
     dates = [...new Set(dates)];
+
+    // manually add date to array if no transactions
+     for (let i=0; i<dates.length; i++) {
+      if (i > 0) {
+        // console.log(new Date(dates[i]).getTime() - new Date(dates[i - 1]).getTime());
+
+        if (new Date(dates[i]).getTime() - new Date(dates[i - 1]).getTime() > 86400000) {         
+          console.log(moment(new Date(dates[i]).getTime()).format('YYYY-MM-DD'));
+
+          dates.splice(i, 0, `${moment(new Date(dates[i]).getTime()).format('YYYY-MM-DD')}`)
+
+          i--;
+        }
+      }
+    };
+
+    console.log(dates);
 
     let tempAmount = 0;
     let transCount = 1;
