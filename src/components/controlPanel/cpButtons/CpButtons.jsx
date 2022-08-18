@@ -8,7 +8,7 @@ const CpButtons = ({ setExcludedCategories }) => {
         <button>Logout</button>
       </div>
       <div className="cpb-stat-line">
-        <span>Since 7-27-2022</span> <span>$27.40</span>
+        <span>Since 7-27-2022</span> <span>[average] / $27.40</span>
       </div>
     </div>
   )

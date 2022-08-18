@@ -47,6 +47,7 @@
   flex-direction: row;
   justify-content: flex-start;
   /* overflow: hidden; */
+  user-select: none;
 }
 
 .rd-unit {
@@ -68,6 +69,7 @@
   align-items: center;
   color: #333;
   cursor: pointer;
+  width: 16px;
 }
 
 /* user settings */
