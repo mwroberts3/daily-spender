@@ -3,7 +3,7 @@ import moment from 'moment'
 import { useState } from 'react'
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 
-const RecentDisplay = ({transactions, excludedCategories}) => {  
+const RecentDisplay = ({transactions, excludedCategories, setDailyAverage}) => {  
   // will need to pass in the start date and spending limit as well
   const [dayCount, setDayCount] = useState(5);
   const [showLeftChevron, setShowLeftChevron] = useState(true);
@@ -31,16 +31,12 @@ const RecentDisplay = ({transactions, excludedCategories}) => {
     fourRecentDates.forEach((date) => {
       date.date = date.date.substring(5, date.date.length);
       date.total = date.total / 1000;
-    })
-
-    console.log(transByDate);
-  }
+    });
+  };
 
   const previousDay = () => {
     let lastMostRecent = fourRecentDates[fourRecentDates.length - 1].id;
     let lastAllTrans = transByDate[transByDate.length - 1].id;
-
-    console.log(lastMostRecent);
 
     if (lastMostRecent > 3) {
       let dayCountIncrease = dayCount + 1;
@@ -55,14 +51,12 @@ const RecentDisplay = ({transactions, excludedCategories}) => {
   
       setDayCount(dayCountIncrease);
       getFourMostRecentTrans(dayCount);
-    }
-  }
+    };
+  };
   
   const nextDay = () => {
     let lastMostRecent = fourRecentDates[fourRecentDates.length - 1].id;
     let lastAllTrans = transByDate[transByDate.length - 1].id;
-
-    console.log(lastMostRecent, lastAllTrans);
 
     if (lastMostRecent === lastAllTrans - 1) {
       setShowRightChevron(false);
@@ -77,25 +71,17 @@ const RecentDisplay = ({transactions, excludedCategories}) => {
     
       setDayCount(dayCountDecrease);
       getFourMostRecentTrans(dayCount); 
-    }
-  }
+    };
+  };
 
   const transByDateSeparation = () => {
     let dates = [];
-
-    for (let i=0; i<transactions.length; i++) {
-      dates.push(transactions[i].date);
-    }
-
-    let currentDate = moment().format('YYYY-MM-DD');
-
-    dates.push(currentDate);
-    dates = [...new Set(dates)];
+    transactions.forEach((tran) => dates.push(tran.date));
+    dates = [...new Set(dates), moment().format('YYYY-MM-DD')];
 
     // manually add date to array if no transactions
      for (let i=0; i<dates.length; i++) {
       if (i > 0) {
-        // console.log(new Date(dates[i]).getTime() - new Date(dates[i - 1]).getTime());
 
         if (new Date(dates[i]).getTime() - new Date(dates[i - 1]).getTime() > 86400000) {         
           console.log(moment(new Date(dates[i]).getTime()).format('YYYY-MM-DD'));
@@ -106,8 +92,6 @@ const RecentDisplay = ({transactions, excludedCategories}) => {
         }
       }
     };
-
-    console.log(dates);
 
     let tempAmount = 0;
     let transCount = 1;
@@ -137,6 +121,14 @@ const RecentDisplay = ({transactions, excludedCategories}) => {
     })
    }
 
+  //  calculate and bubble up daily average
+  // getting an console error, even though working...
+   let testAvg = 0;  
+   transByDate.forEach((tran) => {
+    testAvg += tran.total
+   })
+   setDailyAverage(+((testAvg/transByDate.length) / 1000).toFixed(2));
+  
    getFourMostRecentTrans(dayCount);
   }
 
