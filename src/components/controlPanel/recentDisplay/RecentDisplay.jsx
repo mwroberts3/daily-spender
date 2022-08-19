@@ -77,7 +77,12 @@ const RecentDisplay = ({transactions, excludedCategories, setDailyAverage}) => {
   const transByDateSeparation = () => {
     let dates = [];
     transactions.forEach((tran) => dates.push(tran.date));
-    dates = [...new Set(dates), moment().format('YYYY-MM-DD')];
+    dates = [...new Set(dates)];
+
+    // add current date at start of day
+    if (dates[dates.length-1] !== moment().format('YYYY-MM-DD')) {
+      dates.push(moment().format('YYYY-MM-DD'))
+    }
 
     // manually add date to array if no transactions
      for (let i=0; i<dates.length; i++) {
@@ -121,13 +126,15 @@ const RecentDisplay = ({transactions, excludedCategories, setDailyAverage}) => {
     })
    }
 
+   console.log(dates);
+
   //  calculate and bubble up daily average
   // getting an console error, even though working...
-   let testAvg = 0;  
+   let average = 0;  
    transByDate.forEach((tran) => {
-    testAvg += tran.total
+    average += tran.total
    })
-   setDailyAverage(+((testAvg/transByDate.length) / 1000).toFixed(2));
+   setDailyAverage(+((average/transByDate.length) / 1000).toFixed(2));
   
    getFourMostRecentTrans(dayCount);
   }
