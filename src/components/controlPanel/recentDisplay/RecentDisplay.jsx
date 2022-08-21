@@ -41,13 +41,8 @@ const RecentDisplay = ({transactions, excludedCategories, setDailyAverage}) => {
     if (lastMostRecent > 3) {
       let dayCountIncrease = dayCount + 1;
 
-      if (lastMostRecent <= 4) {
-        setShowLeftChevron(false);
-      }
-
-      if (lastMostRecent <= lastAllTrans) {
-        setShowRightChevron(true);
-      }
+      if (lastMostRecent <= 4) setShowLeftChevron(false);
+      if (lastMostRecent <= lastAllTrans) setShowRightChevron(true);
   
       setDayCount(dayCountIncrease);
       getFourMostRecentTrans(dayCount);
@@ -58,13 +53,8 @@ const RecentDisplay = ({transactions, excludedCategories, setDailyAverage}) => {
     let lastMostRecent = fourRecentDates[fourRecentDates.length - 1].id;
     let lastAllTrans = transByDate[transByDate.length - 1].id;
 
-    if (lastMostRecent === lastAllTrans - 1) {
-      setShowRightChevron(false);
-    }
-
-    if (lastMostRecent >= 3) {
-        setShowLeftChevron(true);
-      }
+    if (lastMostRecent === lastAllTrans - 1) setShowRightChevron(false);
+    if (lastMostRecent >= 3) setShowLeftChevron(true);
 
     if (lastMostRecent <= lastAllTrans - 1) {
       let dayCountDecrease = dayCount - 1;
@@ -89,8 +79,6 @@ const RecentDisplay = ({transactions, excludedCategories, setDailyAverage}) => {
       if (i > 0) {
 
         if (new Date(dates[i]).getTime() - new Date(dates[i - 1]).getTime() > 86400000) {         
-          console.log(moment(new Date(dates[i]).getTime()).format('YYYY-MM-DD'));
-
           dates.splice(i, 0, `${moment(new Date(dates[i]).getTime()).format('YYYY-MM-DD')}`)
 
           i--;
@@ -125,8 +113,6 @@ const RecentDisplay = ({transactions, excludedCategories, setDailyAverage}) => {
       total: 0
     })
    }
-
-   console.log(dates);
 
   //  calculate and bubble up daily average
   // getting an console error, even though working...
