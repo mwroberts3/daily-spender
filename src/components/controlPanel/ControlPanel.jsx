@@ -1,4 +1,5 @@
 import RecentDisplay from "./recentDisplay/RecentDisplay"
+import UserSettings from "./userSettings/UserSettings";
 import {useState} from 'react'
 
 const ControlPanel = ({transactions, excludedCategories, setExcludedCategories}) => {
@@ -11,6 +12,7 @@ const ControlPanel = ({transactions, excludedCategories, setExcludedCategories})
           <button>Settings</button>
           <button>Logout</button>
       </div>
+      <UserSettings transactions={transactions}/>
       <div className="cpb-stat-line">
         <span>Since 7-27-2022</span> <span>~${Math.round(dailyAverage)} / $27.40</span>
       </div>

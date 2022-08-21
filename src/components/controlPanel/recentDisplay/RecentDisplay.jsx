@@ -39,12 +39,10 @@ const RecentDisplay = ({transactions, excludedCategories, setDailyAverage}) => {
     let lastAllTrans = transByDate[transByDate.length - 1].id;
 
     if (lastMostRecent > 3) {
-      let dayCountIncrease = dayCount + 1;
-
       if (lastMostRecent <= 4) setShowLeftChevron(false);
       if (lastMostRecent <= lastAllTrans) setShowRightChevron(true);
   
-      setDayCount(dayCountIncrease);
+      setDayCount(dayCount + 1);
       getFourMostRecentTrans(dayCount);
     };
   };
@@ -57,9 +55,7 @@ const RecentDisplay = ({transactions, excludedCategories, setDailyAverage}) => {
     if (lastMostRecent >= 3) setShowLeftChevron(true);
 
     if (lastMostRecent <= lastAllTrans - 1) {
-      let dayCountDecrease = dayCount - 1;
-    
-      setDayCount(dayCountDecrease);
+      setDayCount(dayCount - 1);
       getFourMostRecentTrans(dayCount); 
     };
   };
