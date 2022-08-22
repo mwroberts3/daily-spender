@@ -2,7 +2,7 @@ import RecentDisplay from "./recentDisplay/RecentDisplay"
 import UserSettings from "./userSettings/UserSettings";
 import {useState} from 'react'
 
-const ControlPanel = ({transactions, excludedCategories, setExcludedCategories}) => {
+const ControlPanel = ({transactions, includedCategories, setIncludedCategories}) => {
   const [dailyAverage, setDailyAverage] = useState(0);
 
   return (
@@ -19,7 +19,7 @@ const ControlPanel = ({transactions, excludedCategories, setExcludedCategories})
     </div>
       <RecentDisplay 
         transactions={transactions}
-        excludedCategories={excludedCategories}
+        includedCategories={includedCategories}
         setDailyAverage={setDailyAverage}
       />
     </div>

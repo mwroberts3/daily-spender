@@ -3,7 +3,7 @@ import {useState, useEffect} from 'react'
 
 const UserSettings = ({transactions}) => {
   const [allCategoryNames, setAllCategoryNames] = useState([]);
-
+  
   useEffect(() => {
     let tempArray = [];
     console.log(transactions);
@@ -17,6 +17,7 @@ const UserSettings = ({transactions}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log('form submitted');
   }
 
   return (
@@ -26,13 +27,14 @@ const UserSettings = ({transactions}) => {
         {
           allCategoryNames.map((name) => {
             return (
-              <div>
+              <div className='us-cate-name'>
                 <input type='checkbox' name={name} />
                 <label for={name}>{name}</label>
               </div>
             )
           })
         }
+        <button type='submit'>Submit</button>
       </form>
     </div>
   )

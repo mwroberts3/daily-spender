@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import moment from 'moment'
 import './balance.css'
 
-const Balance = ({setTransactions, excludedCategories, startDate}) => {
+const Balance = ({setTransactions, includedCategories, startDate}) => {
   const access_token = "GxpXh6Y5Se3hAe-q_GYr3-CC0TZSKaOZhZ9jJ1TV6Bs";
 
   const [isError, setIsError] = useState(false);
@@ -39,7 +39,7 @@ const Balance = ({setTransactions, excludedCategories, startDate}) => {
     transData.forEach((trans) => {
       const {category_name, payee_name, amount, date} = trans;
 
-      if (!excludedCategories.includes(category_name) && !excludedCategories.includes(payee_name)) {
+      if (includedCategories.includes(category_name)) {
         transSum += amount;
 
         let currentDateInMs = new Date(date).getTime();

@@ -3,7 +3,7 @@ import moment from 'moment'
 import { useState } from 'react'
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 
-const RecentDisplay = ({transactions, excludedCategories, setDailyAverage}) => {  
+const RecentDisplay = ({transactions, includedCategories, setDailyAverage}) => {  
   // will need to pass in the start date and spending limit as well
   const [dayCount, setDayCount] = useState(5);
   const [showLeftChevron, setShowLeftChevron] = useState(true);
@@ -88,7 +88,7 @@ const RecentDisplay = ({transactions, excludedCategories, setDailyAverage}) => {
     for (let i=0; i<dates.length; i++) {
       for (let k=transCount - 1; k<transactions.length; k++) {
         if (dates[i] === transactions[k].date) {
-          if (!excludedCategories.includes(transactions[k].category_name) && !excludedCategories.includes(transactions[k].payee_name)) {
+          if (includedCategories.includes(transactions[k].category_name)) {
             tempAmount += transactions[k].amount;
             transCount++;
           }
