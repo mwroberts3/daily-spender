@@ -37,7 +37,7 @@ const Balance = ({setTransactions, includedCategories, startDate}) => {
     transData = transData.data.transactions;
 
     transData.forEach((trans) => {
-      const {category_name, payee_name, amount, date} = trans;
+      const {category_name, amount, date} = trans;
 
       if (includedCategories.includes(category_name)) {
         transSum += amount;
@@ -50,8 +50,6 @@ const Balance = ({setTransactions, includedCategories, startDate}) => {
         }
       }
     })
-
-    console.log(transData);
 
     setTransactions(transData);
 
@@ -77,7 +75,7 @@ const Balance = ({setTransactions, includedCategories, startDate}) => {
     getBudgetId()
       .then((budgetId) => getTransactions(budgetId))
       .then((transSum) => calculateBalance(transSum))
-  }, [])
+  }, [includedCategories])
 
   return (
     <div className='b'>
