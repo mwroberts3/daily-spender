@@ -79,7 +79,6 @@ const Balance = ({setTransactions, includedCategories, startDate}) => {
 
   return (
     <div className='b'>
-      {console.log('previous Day balance', prevDayBalance)}
       <p className={
         balance < 0 ? 'b-neg-2' : balance < prevDayBalance ? 'b-neg-1' : 'b-pos'}> 
         {balance !== 0 ? `$${balance}` : 'loading...'}
