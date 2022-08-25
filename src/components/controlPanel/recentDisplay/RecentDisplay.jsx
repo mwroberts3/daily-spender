@@ -3,7 +3,7 @@ import moment from 'moment'
 import { useState } from 'react'
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
 
-const RecentDisplay = ({transactions, includedCategories, setDailyAverage}) => {  
+const RecentDisplay = ({transactions, includedCategories, setDailyAverage, dailyLimit}) => {  
   // will need to pass in the start date and spending limit as well
   const [dayCount, setDayCount] = useState(5);
   const [showLeftChevron, setShowLeftChevron] = useState(true);
@@ -133,7 +133,7 @@ const RecentDisplay = ({transactions, includedCategories, setDailyAverage}) => {
         return (
           <div className="rd-unit" key={id}>
             <p className='rd-unit-date'>{date}</p>
-            <p className={total < -27.40 ? 'b-neg-2' : 'b-pos'}>${total}</p>
+            <p className={total < -dailyLimit ? 'b-neg-2' : 'b-pos'}>${total}</p>
           </div>
         )})}
       <div className="rd-arrow-right">

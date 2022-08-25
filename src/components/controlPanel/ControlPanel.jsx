@@ -1,5 +1,7 @@
 import RecentDisplay from "./recentDisplay/RecentDisplay"
 import UserCategories from "./userCategories/UserCategories";
+import DailyLimit from "./DailyLimit";
+import StartDate from "./StartDate";
 import {useState} from 'react'
 
 const ControlPanel = ({transactions, includedCategories, setIncludedCategories, startDate, setStartDate, dailyLimit, setDailyLimit}) => {
@@ -11,15 +13,7 @@ const ControlPanel = ({transactions, includedCategories, setIncludedCategories, 
     setShowUserCategories(!showUserCategories);
   }
 
-  const changeStartDate = () => {
-    console.log('...so, you want to change the start date?');
-  }
-
-  const changeDailyLimit = () => {
-    console.log('...so, you want to change the daily limit?')
-  }
-
-  return (
+   return (
     <div className="cp">
       <div className='cpb'>
         <div className="cpb-edit-btns">
@@ -30,13 +24,15 @@ const ControlPanel = ({transactions, includedCategories, setIncludedCategories, 
       </div>
     { showUserCategories && <UserCategories transactions={transactions} includedCategories={includedCategories} setIncludedCategories={setIncludedCategories}/> }
       <div className="cpb-stat-line">
-        <span className='pointer' onClick={changeStartDate}>Since {startDate}</span> <span>~${Math.round(dailyAverage)} / <span className="pointer" onClick={changeDailyLimit}>${dailyLimit}</span></span>
+        <StartDate startDate={startDate} setStartDate={setStartDate}/> 
+        <DailyLimit dailyAverage={dailyAverage}dailyLimit={dailyLimit} setDailyLimit={setDailyLimit}/>
       </div>
     </div>
       <RecentDisplay 
         transactions={transactions}
         includedCategories={includedCategories}
         setDailyAverage={setDailyAverage}
+        dailyLimit={dailyLimit}
       />
     </div>
   )

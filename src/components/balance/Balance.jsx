@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import moment from 'moment'
 import './balance.css'
 
-const Balance = ({setTransactions, includedCategories, startDate}) => {
+const Balance = ({setTransactions, includedCategories, startDate, dailyLimit}) => {
   const access_token = "GxpXh6Y5Se3hAe-q_GYr3-CC0TZSKaOZhZ9jJ1TV6Bs";
 
   const [isError, setIsError] = useState(false);
@@ -67,8 +67,8 @@ const Balance = ({setTransactions, includedCategories, startDate}) => {
 
     console.log('difference in days', diffInDays);
 
-    setBalance(((diffInDays * 27.40) + (transSum / 1000)).toFixed(2));
-    setPrevDayBalance(((diffInDays - 1) * 27.40) + (prevDayTransSum / 1000));
+    setBalance(((diffInDays * dailyLimit) + (transSum / 1000)).toFixed(2));
+    setPrevDayBalance(((diffInDays - 1) * dailyLimit) + (prevDayTransSum / 1000));
   }
 
   useEffect(() => {

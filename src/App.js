@@ -28,6 +28,7 @@ function App() {
         setDailyLimit={setDailyLimit}
       />
       <Balance 
+        dailyLimit={dailyLimit}
         setTransactions={setTransactions} 
         includedCategories={includedCategories}
         startDate={startDate}
