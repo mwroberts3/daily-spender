@@ -75,7 +75,7 @@ const Balance = ({setTransactions, includedCategories, startDate, dailyLimit}) =
     getBudgetId()
       .then((budgetId) => getTransactions(budgetId))
       .then((transSum) => calculateBalance(transSum))
-  }, [includedCategories])
+  }, [includedCategories, dailyLimit, startDate])
 
   return (
     <div className='b'>

@@ -89,8 +89,17 @@
 }
 
 /* Daily Limit */
+.dl {
+  height: 25px;
+}
+
 .dl input {
   width: 80px;
+}
+
+/* Start Date */
+.sd {
+  height: 25px;
 }
 
 /* UTILITIES */
