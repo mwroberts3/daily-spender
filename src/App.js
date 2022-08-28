@@ -1,5 +1,6 @@
 import Balance from "./components/balance/Balance"
 import ControlPanel from "./components/controlPanel/ControlPanel"
+import FirstTimeSetup from "./components/firstTimeSetup/FirstTimeSetup"
 import Header from "./components/header/Header"
 import { useState } from 'react'
 import moment from 'moment'
@@ -23,7 +24,7 @@ function App() {
       return savedStartDate.add(1, 'day').format('YYYY-MM-DD');
     }
 
-    return '2022-07-27';
+    return '';
   });
   const [includedCategories, setIncludedCategories] = useState(() => {
     if (localStorage.getItem('includedCategories')) {
@@ -33,9 +34,27 @@ function App() {
     return [];
   });
 
+  const [isFirstTime, setIsFirstTime] = useState(() => {
+    if (dailyLimit === 0 || startDate === '' || includedCategories === []) {
+      return true;
+    }
+
+    return true;
+  });
+
   return (
     <div className="App">
       <Header />
+      {isFirstTime && <FirstTimeSetup 
+        transactions={transactions}
+        includedCategories={includedCategories}
+        setIncludedCategories={setIncludedCategories}
+        startDate={startDate}
+        setStartDate={setStartDate}
+        dailyLimit={dailyLimit}
+        setDailyLimit={setDailyLimit}
+        dailyAverage={0}
+      />}
       <ControlPanel 
         transactions={transactions}
         includedCategories={includedCategories}
