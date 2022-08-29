@@ -39,13 +39,15 @@ function App() {
       return true;
     }
 
+    // make sure false for real functionality
     return true;
   });
 
-  return (
-    <div className="App">
+  if (isFirstTime) {
+    return (
+      <div className="App">
       <Header />
-      {isFirstTime && <FirstTimeSetup 
+      <FirstTimeSetup 
         transactions={transactions}
         includedCategories={includedCategories}
         setIncludedCategories={setIncludedCategories}
@@ -53,8 +55,19 @@ function App() {
         setStartDate={setStartDate}
         dailyLimit={dailyLimit}
         setDailyLimit={setDailyLimit}
-        dailyAverage={0}
-      />}
+        dailyAverage={0}/>
+
+      {/* to load categories, think of something better */}
+      <section style={{display: 'none'}}>
+        <Balance dailyLimit={dailyLimit} setTransactions={setTransactions} includedCategories={includedCategories} startDate={startDate}/> 
+      </section>
+    </div>
+    );
+  }
+
+  return (
+    <div className="App">
+      <Header />
       <ControlPanel 
         transactions={transactions}
         includedCategories={includedCategories}

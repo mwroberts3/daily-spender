@@ -102,6 +102,10 @@
   height: 25px;
 }
 
+.sd-setDate {
+  color: crimson;
+}
+
 /* UTILITIES */
 .pointer {
   cursor: pointer;
