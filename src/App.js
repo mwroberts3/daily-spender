@@ -48,6 +48,8 @@ function App() {
       <div className="App">
       <Header />
       <FirstTimeSetup 
+        isFirstTime={isFirstTime}
+        setIsFirstTime={setIsFirstTime}
         transactions={transactions}
         includedCategories={includedCategories}
         setIncludedCategories={setIncludedCategories}
@@ -76,6 +78,7 @@ function App() {
         setStartDate={setStartDate}
         dailyLimit={dailyLimit}
         setDailyLimit={setDailyLimit}
+        isFirstTime={isFirstTime}
       />
       <Balance 
         dailyLimit={dailyLimit}

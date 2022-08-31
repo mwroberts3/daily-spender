@@ -4,7 +4,7 @@ import DailyLimit from "./DailyLimit";
 import StartDate from "./StartDate";
 import {useState} from 'react'
 
-const ControlPanel = ({transactions, includedCategories, setIncludedCategories, startDate, setStartDate, dailyLimit, setDailyLimit}) => {
+const ControlPanel = ({transactions, includedCategories, setIncludedCategories, startDate, setStartDate, dailyLimit, setDailyLimit, isFirstTime}) => {
   const [dailyAverage, setDailyAverage] = useState(0);
   const [showUserCategories, setShowUserCategories] = useState(false);
 
@@ -22,7 +22,8 @@ const ControlPanel = ({transactions, includedCategories, setIncludedCategories, 
           </button>
           <button>Logout</button>
       </div>
-    { showUserCategories && <UserCategories transactions={transactions} includedCategories={includedCategories} setIncludedCategories={setIncludedCategories}/> }
+    { showUserCategories && <UserCategories transactions={transactions} includedCategories={includedCategories} setIncludedCategories={setIncludedCategories} 
+    isFirstTime={isFirstTime}/> }
       <div className="cpb-stat-line">
         <StartDate startDate={startDate} setStartDate={setStartDate}/> 
         <DailyLimit dailyAverage={dailyAverage}dailyLimit={dailyLimit} setDailyLimit={setDailyLimit}/>
