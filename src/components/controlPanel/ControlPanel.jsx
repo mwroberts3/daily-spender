@@ -3,9 +3,11 @@ import UserCategories from "./userCategories/UserCategories";
 import DailyLimit from "./DailyLimit";
 import StartDate from "./StartDate";
 import {useState} from 'react'
+import { useGlobalContext } from "../../context";
 
-const ControlPanel = ({transactions, includedCategories, setIncludedCategories, startDate, setStartDate, dailyLimit, setDailyLimit, isFirstTime}) => {
-  const [dailyAverage, setDailyAverage] = useState(0);
+
+const ControlPanel = () => {
+  const {dailyAverage, setDailyAverage, transactions, includedCategories, setIncludedCategories, startDate, setStartDate, dailyLimit, setDailyLimit, isFirstTime} = useGlobalContext();
   const [showUserCategories, setShowUserCategories] = useState(false);
 
   const closeAndSaveUserCategories = () => {

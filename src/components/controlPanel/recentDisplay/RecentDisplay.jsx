@@ -2,8 +2,12 @@ import '../controlPanel.css'
 import moment from 'moment'
 import { useState } from 'react'
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
+import { useGlobalContext } from '../../../context'
 
-const RecentDisplay = ({transactions, includedCategories, setDailyAverage, dailyLimit}) => {  
+const RecentDisplay = ({transactions, includedCategories,dailyLimit}) => {  
+
+  const { calculateDailyAverage } = useGlobalContext();
+
   // will need to pass in the start date and spending limit as well
   const [dayCount, setDayCount] = useState(5);
   const [showLeftChevron, setShowLeftChevron] = useState(true);
@@ -109,15 +113,7 @@ const RecentDisplay = ({transactions, includedCategories, setDailyAverage, daily
       total: 0
     })
    }
-
-  //  calculate and bubble up daily average
-  // getting an console error, even though working...
-   let average = 0;  
-   transByDate.forEach((tran) => {
-    average += tran.total
-   })
-   setDailyAverage(+((average/transByDate.length) / 1000).toFixed(2));
-  
+   calculateDailyAverage(transByDate);
    getFourMostRecentTrans(dayCount);
   }
 

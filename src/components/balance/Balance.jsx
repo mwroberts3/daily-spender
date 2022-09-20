@@ -1,16 +1,25 @@
 import { useEffect, useState } from 'react'
 import moment from 'moment'
 import './balance.css'
+import { useGlobalContext } from '../../context.js'
 
-const Balance = ({setTransactions, includedCategories, startDate, dailyLimit}) => {
+const Balance = () => {
+  const {setTransactions, includedCategories, startDate, dailyLimit} = useGlobalContext();
+
   const access_token = "GxpXh6Y5Se3hAe-q_GYr3-CC0TZSKaOZhZ9jJ1TV6Bs";
+
+  const URLforBudgetID = `https://api.youneedabudget.com/v1/budgets`;
 
   const [isError, setIsError] = useState(false);
   const [balance, setBalance] = useState(0);
   const [prevDayBalance, setPrevDayBalance] = useState(0);
 
-  const getBudgetId = async () => {
-    const response = await fetch(`https://api.youneedabudget.com/v1/budgets`, {
+  useEffect(() => {
+    getBudgetId();
+  }, [includedCategories])
+
+  async function getBudgetId(){
+    const response = await fetch(URLforBudgetID, {
       method: 'GET',
       headers: {
         'Authorization' : `Bearer ${access_token}`
@@ -18,22 +27,22 @@ const Balance = ({setTransactions, includedCategories, startDate, dailyLimit}) =
     });
 
     const data = await response.json();
-    
-    return data.data.budgets[0].id;
-  }
 
-  const getTransactions = async (budgetId) => {
+    let budgetId = data.data.budgets[0].id;
+
     let transSum = 0;
     let prevDayTransSum = 0;
 
-    const response = await fetch(`https://api.youneedabudget.com/v1/budgets/${budgetId}/transactions?since_date=${startDate}`, {
+    const URLforTransactions = `https://api.youneedabudget.com/v1/budgets/${budgetId}/transactions?since_date=${startDate}`
+
+    const response2 = await fetch(URLforTransactions, {
       method: 'GET',
       headers: {
         'Authorization' : `Bearer ${access_token}`,
       },
     });
 
-    let transData = await response.json();
+    let transData = await response2.json();
     transData = transData.data.transactions;
 
     transData.forEach((trans) => {
@@ -53,10 +62,6 @@ const Balance = ({setTransactions, includedCategories, startDate, dailyLimit}) =
 
     setTransactions(transData);
 
-    return {transSum, prevDayTransSum};
-  }
-
-  const calculateBalance = ({transSum, prevDayTransSum}) => {
     let currentDate = new Date(moment().format('L'));
 
     // get time difference in # of days
@@ -65,17 +70,9 @@ const Balance = ({setTransactions, includedCategories, startDate, dailyLimit}) =
     let diffInDays = (diffInTime / (1000 * 3600 * 24)) + 1;
     diffInDays = +diffInDays.toFixed(0);
 
-    console.log('difference in days', diffInDays);
-
     setBalance(((diffInDays * dailyLimit) + (transSum / 1000)).toFixed(2));
-    setPrevDayBalance(((diffInDays - 1) * dailyLimit) + (prevDayTransSum / 1000));
+    setPrevDayBalance(((diffInDays - 1) * dailyLimit) + (prevDayTransSum / 1000)); 
   }
-
-  useEffect(() => {
-    getBudgetId()
-      .then((budgetId) => getTransactions(budgetId))
-      .then((transSum) => calculateBalance(transSum))
-  }, [includedCategories, dailyLimit, startDate])
 
   return (
     <div className='b'>

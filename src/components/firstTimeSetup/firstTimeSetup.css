@@ -1,0 +1,11 @@
+.fts {
+font-weight: bolder;
+max-width: 360px;
+margin: auto;
+height: 90vh;
+}
+
+.fts-settings {
+  display: flex;
+  flex-direction: column;
+}
