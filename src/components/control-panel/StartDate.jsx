@@ -1,34 +1,31 @@
 import React from 'react'
 import { useState } from 'react'
+import { useGlobalContext } from '../../context';
 
-const StartDate = ({startDate, setStartDate, setStartDateDecided}) => {
+const StartDate = () => {
+  const { startDate, setStartDate, setStartDateDecided } = useGlobalContext();
 
   const [isChangingSd, setIsChangingSd] = useState(false);
 
   const updateStartDate = (e) => {
     e.preventDefault();
 
-    if (e.target.children[0]) {
-      let proposedStartDate = e.target.children[0].value;
-
-      if (e.target.tagName === 'FORM' && proposedStartDate !== '') {    
-        localStorage.setItem('startDate', JSON.stringify(proposedStartDate));
-        
-        setStartDate(proposedStartDate);
-        setIsChangingSd(false); 
-        setStartDateDecided(true); 
-      }
+    let proposedStartDate = e.target.children[0].value;
+    
+    if (proposedStartDate !== '') {    
+      localStorage.setItem('startDate', JSON.stringify(proposedStartDate));
+          
+      setStartDate(proposedStartDate);
+      setIsChangingSd(false); 
+      setStartDateDecided(true); 
     }
-    
-    
-    setIsChangingSd(true);
   }
 
   if (!isChangingSd && startDate !== '') {
     return (
       <span className='pointer'>
         Since&nbsp;
-        <span onClick={updateStartDate}>
+        <span onClick={() => setIsChangingSd(true)}>
           {startDate}
         </span>
       </span>

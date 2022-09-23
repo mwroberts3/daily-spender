@@ -1,3 +1,30 @@
+/* UTILITIES */
+.pointer {
+  cursor: pointer;
+}
+
+/* Header */
+.h {
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 32px;
+}
+
+/* FirstTimeSetup */
+.fts {
+  font-weight: bolder;
+  max-width: 360px;
+  margin: auto;
+  height: 90vh;
+}
+
+.fts-settings {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ControlPanel */
 /* control panel */
 .cp {
   max-width: 360px;
@@ -5,7 +32,8 @@
 }
 
 /* control panel buttons */
-.cpb-stat-line, .cpb-edit-btns {
+.cpb-stat-line,
+.cpb-edit-btns {
   max-width: inherit;
   display: flex;
   justify-content: space-between;
@@ -106,8 +134,23 @@
   color: crimson;
 }
 
-/* UTILITIES */
-.pointer {
-  cursor: pointer;
+/* Balance */
+.b {
+  font-weight: bold;
+  font-size: 32px;
+  width: 200px;
+  margin: auto;
+  text-align: center;
 }
 
+.b-neg-2 {
+  color: crimson;
+}
+
+.b-neg-1 {
+  color: #ff8d23;
+}
+
+.b-pos {
+  color: limegreen;
+}

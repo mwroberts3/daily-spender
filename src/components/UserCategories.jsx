@@ -1,7 +1,10 @@
 import React from 'react'
 import {useState, useEffect} from 'react'
+import { useGlobalContext } from '../context';
 
-const UserCategories = ({transactions, includedCategories, setIncludedCategories, isFirstTime, setIsFirstTime}) => {
+const UserCategories = () => {
+  const {transactions, includedCategories, setIncludedCategories, isFirstTime, setIsFirstTime} = useGlobalContext();
+
   const [allCategoryNames, setAllCategoryNames] = useState([]);
 
   useEffect(() => {

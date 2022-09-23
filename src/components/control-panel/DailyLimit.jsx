@@ -1,7 +1,10 @@
 import React from 'react'
 import {useState} from 'react'
+import { useGlobalContext } from '../../context';
 
-const DailyLimit = ({dailyAverage, dailyLimit,setDailyLimit, setDailyLimitDecided}) => {
+const DailyLimit = () => {
+  const {dailyAverage, dailyLimit,setDailyLimit, setDailyLimitDecided} = useGlobalContext();
+
   const [isChangingDl, setIsChangingDl] = useState(false);
 
   const updateDailyLimit = (e) => {

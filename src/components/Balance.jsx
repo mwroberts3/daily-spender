@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import moment from 'moment'
-import './balance.css'
-import { useGlobalContext } from '../../context.js'
+import '../global.css'
+import { useGlobalContext } from '../context.js'
 
 const Balance = () => {
-  const {setTransactions, includedCategories, startDate, dailyLimit} = useGlobalContext();
+  const {setTransactions, includedCategories, startDate, dailyLimit, setDailyAverage} = useGlobalContext();
 
   const access_token = "GxpXh6Y5Se3hAe-q_GYr3-CC0TZSKaOZhZ9jJ1TV6Bs";
 
@@ -16,7 +16,7 @@ const Balance = () => {
 
   useEffect(() => {
     getBudgetId();
-  }, [includedCategories])
+  }, [includedCategories, startDate, dailyLimit])
 
   async function getBudgetId(){
     const response = await fetch(URLforBudgetID, {
@@ -72,6 +72,7 @@ const Balance = () => {
 
     setBalance(((diffInDays * dailyLimit) + (transSum / 1000)).toFixed(2));
     setPrevDayBalance(((diffInDays - 1) * dailyLimit) + (prevDayTransSum / 1000)); 
+    setDailyAverage((transSum / 1000) / diffInDays);
   }
 
   return (

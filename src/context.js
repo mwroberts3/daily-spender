@@ -14,6 +14,8 @@ export const AppProvider = ({children}) => {
     return 0;
   });
 
+  const [dailyAverage, setDailyAverage] = useState(0);
+
   const [startDate, setStartDate] = useState(() => {
     if (localStorage.getItem('startDate')) {
 
@@ -44,21 +46,14 @@ export const AppProvider = ({children}) => {
     return false;
   });
 
-  const [dailyAverage, setDailyAverage] = useState(0);
+  const [dailyLimitDecided, setDailyLimitDecided] = useState(false);
 
-  const calculateDailyAverage = (transByDate) => {
-   //  calculate and bubble up daily average
-   // getting an console error, even though working...
-   let average = 0;  
-   transByDate.forEach((tran) => {
-    average += tran.total
-   })
-   setDailyAverage(+((average/transByDate.length) / 1000).toFixed(2));
-  };
+  const [startDateDecided, setStartDateDecided] = useState(false);
+
+  const [categoriesDecided, setCategoriesDecided] = useState(false);
 
   return <AppContext.Provider value={{dailyAverage,
   setDailyAverage,
-  calculateDailyAverage,
   isFirstTime, 
   setIsFirstTime,
   transactions,
@@ -68,7 +63,13 @@ export const AppProvider = ({children}) => {
   startDate, 
   setStartDate,
   includedCategories,
-  setIncludedCategories}}>
+  setIncludedCategories,
+  dailyLimitDecided,
+  setDailyLimitDecided,
+  startDateDecided,
+  setStartDateDecided,
+  categoriesDecided,
+  setCategoriesDecided}}>
     {children}
   </AppContext.Provider>
 }

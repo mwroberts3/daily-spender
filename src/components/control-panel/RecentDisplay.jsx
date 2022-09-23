@@ -1,12 +1,11 @@
-import '../controlPanel.css'
+import '../../global.css'
 import moment from 'moment'
 import { useState } from 'react'
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa'
-import { useGlobalContext } from '../../../context'
+import { useGlobalContext } from '../../context'
 
-const RecentDisplay = ({transactions, includedCategories,dailyLimit}) => {  
-
-  const { calculateDailyAverage } = useGlobalContext();
+const RecentDisplay = () => {  
+  const { transactions, includedCategories, dailyLimit } = useGlobalContext();
 
   // will need to pass in the start date and spending limit as well
   const [dayCount, setDayCount] = useState(5);
@@ -113,7 +112,7 @@ const RecentDisplay = ({transactions, includedCategories,dailyLimit}) => {
       total: 0
     })
    }
-   calculateDailyAverage(transByDate);
+
    getFourMostRecentTrans(dayCount);
   }
 
