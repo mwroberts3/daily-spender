@@ -1,13 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useReducer } from 'react';
 import { useGlobalContext } from './context';
 import moment from 'moment'
+import reducer from './reducer';
 
 export const useFetchBalance = () => {
     const {setTransactions, includedCategories, startDate, dailyLimit, setDailyAverage} = useGlobalContext();
 
-  const [isError, setIsError] = useState(false);
-  const [balance, setBalance] = useState(0);
-  const [prevDayBalance, setPrevDayBalance] = useState(0);
+  const initialBalanceState = {
+    isError: false,
+    balance: 0,
+    prevDayBalance: 0
+  }
+
+  const [state, dispatch] = useReducer(reducer, initialBalanceState);
 
   const access_token = "GxpXh6Y5Se3hAe-q_GYr3-CC0TZSKaOZhZ9jJ1TV6Bs";
 
@@ -69,10 +74,14 @@ export const useFetchBalance = () => {
     let diffInDays = (diffInTime / (1000 * 3600 * 24)) + 1;
     diffInDays = +diffInDays.toFixed(0);
 
-    setBalance(((diffInDays * dailyLimit) + (transSum / 1000)).toFixed(2));
-    setPrevDayBalance(((diffInDays - 1) * dailyLimit) + (prevDayTransSum / 1000)); 
+    dispatch({
+      type: 'UPDATE_BALANCE', 
+      payload: {
+        balance: ((diffInDays * dailyLimit) + (transSum / 1000)).toFixed(2), prevDayBalance: ((diffInDays - 1) * dailyLimit) + (prevDayTransSum / 1000)}
+      })
+
     setDailyAverage((transSum / 1000) / diffInDays);
 }
 
-return {balance, prevDayBalance}
+return {balance:state.balance, prevDayBalance:state.prevDayBalance}
 }
