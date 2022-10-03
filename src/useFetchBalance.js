@@ -8,12 +8,14 @@ export const useFetchBalance = () => {
 
   const initialBalanceState = {
     isError: false,
+    isLoading: true,
     balance: 0,
     prevDayBalance: 0
   }
 
   const [state, dispatch] = useReducer(reducer, initialBalanceState);
 
+  // const access_token = "GxpXh6Y5Se3hAe-q_GYr3-CC0KaOZhZ9jJ1TV6Bs";
   const access_token = "GxpXh6Y5Se3hAe-q_GYr3-CC0TZSKaOZhZ9jJ1TV6Bs";
 
   const URLforBudgetID = `https://api.youneedabudget.com/v1/budgets`;
@@ -31,6 +33,8 @@ export const useFetchBalance = () => {
     });
 
     const data = await response.json();
+    
+    if (data.error) dispatch({type: 'ERROR_DETECTED', payload: data.error})
 
     let budgetId = data.data.budgets[0].id;
 
@@ -83,5 +87,5 @@ export const useFetchBalance = () => {
     setDailyAverage((transSum / 1000) / diffInDays);
 }
 
-return {balance:state.balance, prevDayBalance:state.prevDayBalance}
+return {isError: state.isError, isLoading: state.isLoading, balance:state.balance, prevDayBalance:state.prevDayBalance}
 }
