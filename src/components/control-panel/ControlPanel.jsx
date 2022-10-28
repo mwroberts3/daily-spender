@@ -2,6 +2,7 @@ import RecentDisplay from "./RecentDisplay"
 import UserCategories from "../UserCategories";
 import DailyLimit from "./DailyLimit";
 import StartDate from "./StartDate";
+import Balance from "../Balance";
 import {useState} from 'react'
 import { useGlobalContext } from "../../context";
 
@@ -30,6 +31,7 @@ const ControlPanel = () => {
         <DailyLimit />
       </div>
     </div>
+      <Balance />
       <RecentDisplay />
     </div>
   )
