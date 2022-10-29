@@ -1,40 +1,12 @@
 import '../../global.css'
 import moment from 'moment'
-import { useState, useEffect } from 'react'
 import { useGlobalContext } from '../../context'
-import Balance from '../Balance'
 
 const RecentDisplay = () => {  
   const { transactions, includedCategories, dailyLimit } = useGlobalContext();
 
-  // will need to pass in the start date and spending limit as well
-  const dayCount = 5;
   const transByDate = [];
-  const fourRecentDates = [];
   
-  const getFourMostRecentTrans = (dayCount) => {
-    let totalsDaysofUse = transByDate.length;
-
-    // need to put in safeties if user has less than 4 days
-    fourRecentDates.splice();
-
-    transByDate.forEach((date) => {
-      if (date.id > totalsDaysofUse - dayCount) {
-        fourRecentDates.push(date)
-      }
-    })
-
-    if (fourRecentDates.length > 4) {
-      fourRecentDates.splice(fourRecentDates.length-(dayCount-5));
-    }
-
-    // condense data for cleaner HTML in return
-    transByDate.forEach((date) => {
-      date.date = date.date.substring(5, date.date.length);
-      date.total = date.total / 1000;
-    });
-  };
-
   const transByDateSeparation = () => {
     let dates = [];
     transactions.forEach((tran) => dates.push(tran.date));
@@ -85,18 +57,21 @@ const RecentDisplay = () => {
     })
    }
 
-   getFourMostRecentTrans(dayCount);
+    // condense data for cleaner HTML in return
+    transByDate.forEach((date) => {
+      date.date = date.date.substring(5, date.date.length);
+      date.total = date.total / 1000;
+    });
   }
 
   transByDateSeparation();
   
-
   if (transByDate.length > 1){
     return (
       <div className='rd'>
         {transByDate.reverse().map((item) => {
           const { id, date, total } = item;
-            return <div className="rd-unit" key={id}>
+            return <div className='rd-unit' key={id}>
                 <p className='rd-unit-date'>{date}</p>
                 <p className={total < -dailyLimit ? 'b-neg-2' : 'b-pos'}>${total}</p>
               </div>
