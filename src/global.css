@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
+:root {
+  --max-width: 360px;
+}
+
 /* Main Styles */
 * {
   box-sizing: border-box;
@@ -19,7 +23,9 @@ body {
 }
 
 .app-wrapper {
+  margin: 0 auto;
   min-height: 100vh;
+  max-width: var(--max-width);
   padding-bottom: 40px;
 }
 
@@ -31,10 +37,25 @@ body {
   font-size: 32px;
 }
 
+/* app-login */
+.app-login {
+  text-align: center;
+}
+
+.app-login button {
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #888;
+}
+
+.app-login a {
+  text-decoration: none;
+}
+
 /* FirstTimeSetup */
 .fts {
   font-weight: bolder;
-  max-width: 360px;
   margin: auto;
   height: 90vh;
 }
@@ -47,14 +68,12 @@ body {
 /* ControlPanel */
 /* control panel */
 .cp {
-  max-width: 360px;
   margin: 0 auto 10px;
 }
 
 /* control panel buttons */
 .cpb-stat-line,
 .cpb-edit-btns {
-  max-width: inherit;
   display: flex;
   justify-content: space-between;
 }
@@ -85,7 +104,6 @@ body {
 
 /* recent display */
 .rd {
-  max-width: inherit;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
