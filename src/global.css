@@ -207,3 +207,7 @@ footer {
   font-size: 10px;
   color: #aaa;
 }
+
+footer a {
+  color: #888;
+}

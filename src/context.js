@@ -4,6 +4,19 @@ import moment from 'moment'
 const AppContext = React.createContext();
 
 export const AppProvider = ({children}) => {
+  const [token, setToken] = useState('');
+  const devURL = 'http://localhost:3000/#access_token=';
+  const productionURL = 'https://ynab-daily-spender.netlify.app/#access_token=';
+
+  if (!token) {
+  let access_token = window.location.href.split(productionURL);
+  if (window.location.href.includes('token=')) {
+    access_token = access_token[1].split('&token_type=Bearer&expires_in=7200');
+    access_token = access_token[0];
+    setToken(access_token);
+    // window.location.href = 'http://localhost:3000'
+  }}
+
   const [transactions, setTransactions] = useState([]);
 
   const [dailyLimit, setDailyLimit] = useState(() => {
@@ -52,7 +65,10 @@ export const AppProvider = ({children}) => {
 
   const [categoriesDecided, setCategoriesDecided] = useState(false);
 
-  return <AppContext.Provider value={{dailyAverage,
+  return <AppContext.Provider value={{
+  token,
+  setToken,
+  dailyAverage,
   setDailyAverage,
   isFirstTime, 
   setIsFirstTime,

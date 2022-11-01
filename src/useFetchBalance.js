@@ -3,7 +3,7 @@ import { useGlobalContext } from './context';
 import moment from 'moment'
 import reducer from './reducer';
 
-export const useFetchBalance = () => {
+export const useFetchBalance = (token) => {
     const {setTransactions, includedCategories, startDate, dailyLimit, setDailyAverage} = useGlobalContext();
 
   const initialBalanceState = {
@@ -15,9 +15,6 @@ export const useFetchBalance = () => {
 
   const [state, dispatch] = useReducer(reducer, initialBalanceState);
 
-  // const access_token = "GxpXh6Y5Se3hAe-q_GYr3-CC0KaOZhZ9jJ1TV6Bs";
-  const access_token = "GxpXh6Y5Se3hAe-q_GYr3-CC0TZSKaOZhZ9jJ1TV6Bs";
-
   const URLforBudgetID = `https://api.youneedabudget.com/v1/budgets`;
 
   useEffect(() => {
@@ -28,7 +25,7 @@ export const useFetchBalance = () => {
     const response = await fetch(URLforBudgetID, {
       method: 'GET',
       headers: {
-        'Authorization' : `Bearer ${access_token}`
+        'Authorization' : `Bearer ${token}`
       }
     });
 
@@ -46,7 +43,7 @@ export const useFetchBalance = () => {
     const response2 = await fetch(URLforTransactions, {
       method: 'GET',
       headers: {
-        'Authorization' : `Bearer ${access_token}`,
+        'Authorization' : `Bearer ${token}`,
       },
     });
 

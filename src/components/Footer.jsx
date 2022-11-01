@@ -3,7 +3,7 @@ import React from 'react'
 const Footer = () => {
   return (
     <footer>
-      YNAB Daily Spender v1.0.0 2022
+      Your Daily Spender v1.0.0 2022 <a href='../public/privacy-policy.html'>Privacy Policy</a>
     </footer>
   )
 }
