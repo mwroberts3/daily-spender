@@ -208,6 +208,9 @@ footer {
   color: #aaa;
 }
 
-footer a {
+footer span {
+  text-decoration: underline;
   color: #888;
 }
+
+/* privacy policy */

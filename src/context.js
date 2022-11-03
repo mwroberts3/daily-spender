@@ -9,7 +9,7 @@ export const AppProvider = ({children}) => {
   const productionURL = 'https://ynab-daily-spender.netlify.app/#access_token=';
 
   if (!token) {
-  let access_token = window.location.href.split(productionURL);
+  let access_token = window.location.href.split(devURL);
   if (window.location.href.includes('token=')) {
     access_token = access_token[1].split('&token_type=Bearer&expires_in=7200');
     access_token = access_token[0];

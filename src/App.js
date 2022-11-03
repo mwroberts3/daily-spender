@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Balance from "./components/Balance"
 import ControlPanel from "./components/control-panel/ControlPanel"
 import FirstTimeSetup from "./components/FirstTimeSetup"
@@ -11,13 +12,15 @@ const productionURL = 'https://app.youneedabudget.com/oauth/authorize?client_id=
 
 function App() {
   const { isFirstTime, token } = useGlobalContext();
+  const [viewPrivacyPolicy, setViewPrivacyPolicy] = useState(false);
 
-  if (window.location.href.includes('privacy-policy')) { 
+  if (viewPrivacyPolicy) { 
     return (
       <div className='App'>
         <div className='app-wrapper'>
           <p>Your Daily Spender - Privacy Policy</p>
         </div>
+        <Footer link={'Home'} setViewPrivacyPolicy={setViewPrivacyPolicy}/>
       </div>
     )
   }
@@ -29,11 +32,11 @@ function App() {
           <Header />
           <section className='app-login'>
             <button>
-              <a href={productionURL}>please authorize Your Daily Spender</a>
+              <a href={devURL}>please authorize Your Daily Spender</a>
             </button>
           </section>
         </div>
-        <Footer />
+        <Footer link={'Privacy Policy'} setViewPrivacyPolicy={setViewPrivacyPolicy}/>
       </div>
     )
   }
@@ -49,7 +52,7 @@ function App() {
           <Balance /> 
         </section>
       </div>
-      <Footer />
+      <Footer link={'Privacy Policy'} setViewPrivacyPolicy={setViewPrivacyPolicy}/>
     </div>
     );
   }
@@ -60,7 +63,7 @@ function App() {
         <Header />
         <ControlPanel />
       </div>
-        <Footer />
+        <Footer link={'Privacy Policy'} setViewPrivacyPolicy={setViewPrivacyPolicy}/>
     </div>
   );
 }
