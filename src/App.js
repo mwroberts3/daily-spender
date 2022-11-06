@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Balance from "./components/Balance"
 import ControlPanel from "./components/control-panel/ControlPanel"
 import FirstTimeSetup from "./components/FirstTimeSetup"
+import PrivacyPolicy from './components/PrivacyPolicy';
 import Header from "./components/Header"
 import Footer from "./components/Footer"
 import { useGlobalContext } from './context'
@@ -15,14 +16,7 @@ function App() {
   const [viewPrivacyPolicy, setViewPrivacyPolicy] = useState(false);
 
   if (viewPrivacyPolicy) { 
-    return (
-      <div className='App'>
-        <div className='app-wrapper'>
-          <p>Your Daily Spender - Privacy Policy</p>
-        </div>
-        <Footer link={'Home'} setViewPrivacyPolicy={setViewPrivacyPolicy}/>
-      </div>
-    )
+    return <PrivacyPolicy setViewPrivacyPolicy={setViewPrivacyPolicy}/>
   }
 
   if (!token) {   
@@ -31,9 +25,7 @@ function App() {
         <div className='app-wrapper'>
           <Header />
           <section className='app-login'>
-            <button>
-              <a href={devURL}>please authorize Your Daily Spender</a>
-            </button>
+              <a href={devURL}><button className='btn-style'>Authorize Your Daily Spender</button></a>
           </section>
         </div>
         <Footer link={'Privacy Policy'} setViewPrivacyPolicy={setViewPrivacyPolicy}/>
@@ -47,7 +39,6 @@ function App() {
       <div className='app-wrapper'>
         <Header />
         <FirstTimeSetup />
-
         <section style={{display: 'none'}}>
           <Balance /> 
         </section>

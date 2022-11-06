@@ -1,19 +1,41 @@
 import { useFetchBalance } from '../useFetchBalance';
-import Loading from './Loading';
+// import Loading from './Loading';
 import '../global.css'
 import { useGlobalContext } from '../context';
+import { useMemo } from 'react';
 
 const Balance = () => {
-  const {token} = useGlobalContext();
-  
-  const {isLoading, isError, balance, prevDayBalance} = useFetchBalance(token);
+  const { token, dailyLimit, todaysTransTotal, transactions } = useGlobalContext();
+  const { isLoading, isError, balance, totalDays } = useFetchBalance(token);
+
+  console.log('totalDays', totalDays);
+  console.log('dailyLimit', dailyLimit);
+
+  const balanceClass = useMemo(() => {
+    console.log(transactions);
+ 
+    if (todaysTransTotal.current) {
+      if (todaysTransTotal > dailyLimit && balance > 0) return 'b-neg-1';
+      if (todaysTransTotal < dailyLimit && balance > 0) return 'b-pos';
+      return 'b-neg-2';
+    }
+
+    return 'b-loading-2';
+  }, [transactions, dailyLimit, balance, todaysTransTotal]);
+
+  const Loading = () => {
+    return <span className='b-loading'>...loading</span>;
+  }
+
+  const Error = () => {
+    return <span className='b-error'>error connecting</span>
+  }
 
   return (
     <div className='b'>
-      <p className={
-        balance < 0 ? 'b-neg-2' : balance < prevDayBalance ? 'b-neg-1' : 'b-pos'}> 
-        {isError && 'error connecting'}
-        {isLoading ? <Loading /> : `$${balance}`}
+      <p className={balanceClass}> 
+        {isError ? <Error /> : 
+        isLoading ? <Loading /> : `$${balance}`}
       </p>
     </div>
   )

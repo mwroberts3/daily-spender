@@ -5,7 +5,8 @@ const reducer = (state, action) => {
       ...state,
       isLoading: false,
       balance: action.payload.balance,
-      prevDayBalance: action.payload.prevDayBalance
+      prevDayBalance: action.payload.prevDayBalance,
+      totalDays: action.payload.totalDays
     };
   }
 

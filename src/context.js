@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useRef } from 'react'
 import moment from 'moment'
 
 const AppContext = React.createContext();
@@ -18,6 +18,7 @@ export const AppProvider = ({children}) => {
   }}
 
   const [transactions, setTransactions] = useState([]);
+  const todaysTransTotal = useRef(null);
 
   const [dailyLimit, setDailyLimit] = useState(() => {
     if (localStorage.getItem('dailyLimit')) {
@@ -74,6 +75,7 @@ export const AppProvider = ({children}) => {
   setIsFirstTime,
   transactions,
   setTransactions,
+  todaysTransTotal,
   dailyLimit,
   setDailyLimit,
   startDate, 

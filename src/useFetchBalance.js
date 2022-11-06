@@ -10,8 +10,7 @@ export const useFetchBalance = (token) => {
     isError: false,
     isLoading: true,
     balance: 0,
-    prevDayBalance: 0
-  }
+    totalDays: 0  }
 
   const [state, dispatch] = useReducer(reducer, initialBalanceState);
 
@@ -36,7 +35,6 @@ export const useFetchBalance = (token) => {
     let budgetId = data.data.budgets[0].id;
 
     let transSum = 0;
-    let prevDayTransSum = 0;
 
     const URLforTransactions = `https://api.youneedabudget.com/v1/budgets/${budgetId}/transactions?since_date=${startDate}`
 
@@ -51,17 +49,19 @@ export const useFetchBalance = (token) => {
     transData = transData.data.transactions;
 
     transData.forEach((trans) => {
-      const {category_name, amount, date} = trans;
+      const {category_name, amount, date, subtransactions} = trans;
+
+      // check for split transactions
+      if (subtransactions.length > 0) {
+        subtransactions.forEach((subTrans) => {
+          if (includedCategories.includes(subTrans.category_name)) {
+            transSum += subTrans.amount;
+          }
+        })
+      }
 
       if (includedCategories.includes(category_name)) {
         transSum += amount;
-
-        let currentDateInMs = new Date(date).getTime();
-        let finalDateInMs = new Date(transData[transData.length - 1].date).getTime();
-
-        if (currentDateInMs < finalDateInMs) {
-          prevDayTransSum += amount;
-        }
       }
     })
 
@@ -78,11 +78,12 @@ export const useFetchBalance = (token) => {
     dispatch({
       type: 'UPDATE_BALANCE', 
       payload: {
-        balance: ((diffInDays * dailyLimit) + (transSum / 1000)).toFixed(2), prevDayBalance: ((diffInDays - 1) * dailyLimit) + (prevDayTransSum / 1000)}
+        balance: ((diffInDays * dailyLimit) + (transSum / 1000)).toFixed(2),
+        totalDays: diffInDays}
       })
 
     setDailyAverage((transSum / 1000) / diffInDays);
 }
 
-return {isError: state.isError, isLoading: state.isLoading, balance:state.balance, prevDayBalance:state.prevDayBalance}
+return {isError: state.isError, isLoading: state.isLoading, balance:state.balance, totalDays: state.totalDays}
 }

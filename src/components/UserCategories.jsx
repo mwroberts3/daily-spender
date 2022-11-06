@@ -18,6 +18,8 @@ const UserCategories = () => {
     tempArray = [...new Set(tempArray)];
  
     tempArray.forEach((trans) => {
+      console.log(trans);
+
       if (includedCategories.includes(trans)) {
         tempArray2.push({name: trans, included: true});
       } else {

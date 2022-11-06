@@ -3,7 +3,7 @@ import moment from 'moment'
 import { useGlobalContext } from '../../context'
 
 const RecentDisplay = () => {  
-  const { transactions, includedCategories, dailyLimit } = useGlobalContext();
+  const { transactions, includedCategories, dailyLimit, todaysTransTotal } = useGlobalContext();
 
   const transByDate = [];
   
@@ -39,6 +39,16 @@ const RecentDisplay = () => {
             tempAmount += transactions[k].amount;
             transCount++;
           }
+
+          // check for split transactions
+          if (transactions[k].subtransactions.length > 0) {
+            for (let j=0; j<transactions[k].subtransactions.length; j++) {
+              if (includedCategories.includes(transactions[k].subtransactions[j].category_name)) {
+                tempAmount += transactions[k].subtransactions[j].amount;
+                transCount++;
+              }
+            }
+          }
         }
         
         if (k === transactions.length - 1) {
@@ -69,12 +79,20 @@ const RecentDisplay = () => {
   if (transByDate.length > 1){
     return (
       <div className='rd'>
-        {transByDate.reverse().map((item) => {
+        {transByDate.reverse().map((item, index) => {
           const { id, date, total } = item;
+
+          if (index === 0) {
             return <div className='rd-unit' key={id}>
-                <p className='rd-unit-date'>{date}</p>
-                <p className={total < -dailyLimit ? 'b-neg-2' : 'b-pos'}>${total}</p>
-              </div>
+              <p className='rd-unit-date'>{date}</p>
+              <p className={total < -dailyLimit ? 'b-neg-2' : 'b-pos'} ref={todaysTransTotal}>${total}</p>
+            </div>
+          }
+          return <div className='rd-unit' key={id}>
+            <p className='rd-unit-date'>{date}</p>
+            <p className={total < -dailyLimit ? 'b-neg-2' : 'b-pos'}>${total}</p>
+          </div>
+
           
           })}
      </div>
