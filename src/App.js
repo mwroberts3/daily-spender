@@ -9,7 +9,7 @@ import { useGlobalContext } from './context'
 
 const devURL = 'https://app.youneedabudget.com/oauth/authorize?client_id=_4jwptmM2jY9dfy0j2f7AnUSMHJjIDcGEIgqw9nYiiM&redirect_uri=http://localhost:3000/&response_type=token';
 
-const productionURL = 'https://app.youneedabudget.com/oauth/authorize?client_id=_4jwptmM2jY9dfy0j2f7AnUSMHJjIDcGEIgqw9nYiiM&redirect_uri=https://ynab-daily-spender.netlify.app/&response_type=token';
+const productionURL = 'https://app.youneedabudget.com/oauth/authorize?client_id=_4jwptmM2jY9dfy0j2f7AnUSMHJjIDcGEIgqw9nYiiM&redirect_uri=https://your-daily-spender.netlify.app/&response_type=token';
 
 function App() {
   const { isFirstTime, token } = useGlobalContext();
@@ -25,7 +25,7 @@ function App() {
         <div className='app-wrapper'>
           <Header />
           <section className='app-login'>
-              <a href={devURL}><button className='btn-style'>Authorize Your Daily Spender</button></a>
+              <a href={productionURL}><button className='btn-style'>Authorize Your Daily Spender</button></a>
           </section>
         </div>
         <Footer link={'Privacy Policy'} setViewPrivacyPolicy={setViewPrivacyPolicy}/>

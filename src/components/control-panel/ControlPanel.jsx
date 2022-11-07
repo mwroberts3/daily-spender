@@ -7,7 +7,7 @@ import {useState} from 'react'
 import { useGlobalContext } from "../../context";
 
 const devURL = 'http://localhost:3000';
-const productionURL = 'https://ynab-daily-spender.netlify.app/';
+const productionURL = 'https://your-daily-spender.netlify.app/';
 
 const ControlPanel = () => {
   const { includedCategories } = useGlobalContext();
@@ -19,7 +19,7 @@ const ControlPanel = () => {
   }
 
   const logout = () => {
-    window.location.href = devURL;
+    window.location.href = productionURL;
   }
 
    return (

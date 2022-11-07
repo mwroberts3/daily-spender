@@ -3,7 +3,7 @@ import moment from 'moment'
 import { useGlobalContext } from '../../context'
 
 const RecentDisplay = () => {  
-  const { transactions, includedCategories, dailyLimit, todaysTransTotal } = useGlobalContext();
+  const { transactions, includedCategories, dailyLimit, todaysTransTotal, startDate } = useGlobalContext();
 
   const transByDate = [];
   
@@ -12,6 +12,11 @@ const RecentDisplay = () => {
     transactions.forEach((tran) => dates.push(tran.date));
     dates = [...new Set(dates)];
 
+    // add startDate if day happens to have no transactions
+    if (!dates.includes(startDate)) {
+      dates.unshift(startDate);
+    }
+    
     // add current date at start of day
     if (dates[dates.length-1] !== moment().format('YYYY-MM-DD')) {
       dates.push(moment().format('YYYY-MM-DD'))
@@ -20,7 +25,6 @@ const RecentDisplay = () => {
     // manually add date to array if no transactions
      for (let i=0; i<dates.length; i++) {
       if (i > 0) {
-
         if (new Date(dates[i]).getTime() - new Date(dates[i - 1]).getTime() > 86400000) {         
           dates.splice(i, 0, `${moment(new Date(dates[i]).getTime()).format('YYYY-MM-DD')}`)
 
@@ -32,7 +36,7 @@ const RecentDisplay = () => {
     let tempAmount = 0;
     let transCount = 1;
 
-    for (let i=0; i<dates.length; i++) {
+    for (let i=0; i<dates.length; i++) {      
       for (let k=transCount - 1; k<transactions.length; k++) {
         if (dates[i] === transactions[k].date) {
           if (includedCategories.includes(transactions[k].category_name)) {
@@ -72,6 +76,8 @@ const RecentDisplay = () => {
       date.date = date.date.substring(5, date.date.length);
       date.total = date.total / 1000;
     });
+
+    console.log(transByDate);
   }
 
   transByDateSeparation();
@@ -92,8 +98,6 @@ const RecentDisplay = () => {
             <p className='rd-unit-date'>{date}</p>
             <p className={total < -dailyLimit ? 'b-neg-2' : 'b-pos'}>${total}</p>
           </div>
-
-          
           })}
      </div>
     )
