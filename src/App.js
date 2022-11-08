@@ -25,7 +25,7 @@ function App() {
         <div className='app-wrapper'>
           <Header />
           <section className='app-login'>
-              <a href={productionURL}><button className='btn-style'>Authorize Your Daily Spender</button></a>
+              <a href={devURL}><button className='btn-style'>Authorize Your Daily Spender</button></a>
           </section>
         </div>
         <Footer link={'Privacy Policy'} setViewPrivacyPolicy={setViewPrivacyPolicy}/>

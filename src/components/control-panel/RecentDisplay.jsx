@@ -29,14 +29,18 @@ const RecentDisplay = () => {
           dates.splice(i, 0, `${moment(new Date(dates[i]).getTime()).format('YYYY-MM-DD')}`)
 
           i--;
-        }
-      }
-    };
+      }}};
+
+      console.log('dates', dates);
+
+
 
     let tempAmount = 0;
     let transCount = 1;
 
-    for (let i=0; i<dates.length; i++) {      
+      console.log(transactions);
+
+    for (let i=0; i<dates.length; i++) { 
       for (let k=transCount - 1; k<transactions.length; k++) {
         if (dates[i] === transactions[k].date) {
           if (includedCategories.includes(transactions[k].category_name)) {
@@ -55,20 +59,25 @@ const RecentDisplay = () => {
           }
         }
         
+        // add specific Date and transactions after looking through all transactions
         if (k === transactions.length - 1) {
           transByDate.push({id: i, date: dates[i], total: tempAmount});
 
           tempAmount = 0;
         }
       }
-   }
+    }
+    
+    //  adds current date to Recent Display, if there are no transactions for day so far
+    if (dates.length > transByDate.length) {
+      transByDate.push({
+        id: dates.length,
+        date: dates[dates.length-1],
+        total: 0
+      })
 
-   if (dates.length > transByDate.length) {
-    transByDate.push({
-      id: dates.length,
-      date: dates[dates.length-1],
-      total: 0
-    })
+      // maybe compare transByDate and dates length
+      console.log(transByDate.length, dates.length);
    }
 
     // condense data for cleaner HTML in return
